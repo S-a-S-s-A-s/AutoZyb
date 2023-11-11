@@ -160,9 +160,11 @@ func tasklist(preURL string, token string) (float64, string, string, []string, s
 	orderId := newList["orderId"]
 	uniqueId := newList["uniqueId"]
 	content := newList["content"].(map[string]interface{})
-
-	urlList := content["urlList"].([]string)
-	text := content["text"].(string)
+	urlList := make([]string, len(content["urlList"].([]interface{})))
+	for i, i2 := range content["urlList"].([]interface{}) {
+		urlList[i] = fmt.Sprintf("%v", i2)
+	}
+	text := fmt.Sprintf("%v", content["text"])
 	return total.(float64), orderId.(string), uniqueId.(string), urlList, text
 }
 

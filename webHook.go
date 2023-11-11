@@ -2,24 +2,30 @@ package main
 
 import "github.com/parnurzeal/gorequest"
 
-type reqStruct struct {
-	ZhCn struct {
-		Title   string `json:"title"`
-		Content [][]struct {
-			Tag  string `json:"tag"`
-			Text string `json:"text"`
-			Href string `json:"href,omitempty"`
-		} `json:"content"`
-	} `json:"zh_cn"`
+type req struct {
+	MsgType string `json:"msg_type"`
+	Content struct {
+		Post struct {
+			ZhCN struct {
+				Title   string `json:"title"`
+				Content [][]struct {
+					Tag  string `json:"tag"`
+					Text string `json:"text"`
+					Href string `json:"href,omitempty"`
+				} `json:"content"`
+			} `json:"zh-CN"`
+		} `json:"post"`
+	} `json:"content"`
 }
 
 func webHook(urlList []string, text string) {
 	request := gorequest.New()
 
 	for i := 0; i < len(urlList); i++ {
-		data := reqStruct{}
-		data.ZhCn.Title = "有新的题目"
-		data.ZhCn.Content = [][]struct {
+		data := req{}
+		data.MsgType = "post"
+		data.Content.Post.ZhCN.Title = "有新的题目"
+		data.Content.Post.ZhCN.Content = [][]struct {
 			Tag  string `json:"tag"`
 			Text string `json:"text"`
 			Href string `json:"href,omitempty"`
@@ -39,9 +45,12 @@ func webHook(urlList []string, text string) {
 			},
 		}
 
-		request.Post("https://open.feishu.cn/open-apis/bot/v2/hook/11db536e-f92a-4f1e-a091-cc17463b52fb").Type("json").
+		_, _, errors := request.Post("https://open.feishu.cn/open-apis/bot/v2/hook/11db536e-f92a-4f1e-a091-cc17463b52fb").Type("json").
 			Send(data).
 			End()
+		if errors != nil {
+			println(errors)
+		}
 	}
 
 }
