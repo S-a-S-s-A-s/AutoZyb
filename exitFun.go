@@ -8,6 +8,7 @@ import (
 
 func escExit(preURL, token string) {
 	err := keyboard.Open()
+	defer keyboard.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,12 +20,11 @@ func escExit(preURL, token string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		//如果是k键，就退出
+		//如果是空格和esc键，就退出
 		if key == keyboard.KeySpace || key == keyboard.KeyEsc {
 			//fmt.Printf("Key pressed: %v\n", key)
 
 			dequeueorder(preURL, token)
-			keyboard.Close()
 			os.Exit(0)
 		}
 
