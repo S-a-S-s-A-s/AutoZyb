@@ -45,7 +45,7 @@ func webHook(urlList []string, text string) {
 			},
 		}
 
-		_, _, errors := request.Post("https://open.feishu.cn/open-apis/bot/v2/hook/11db536e-f92a-4f1e-a091-cc17463b52fb").Type("json").
+		_, _, errors := request.Post("飞书webhook地址").Type("json").
 			Send(data).
 			End()
 		if errors != nil {

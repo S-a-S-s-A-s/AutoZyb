@@ -10,7 +10,6 @@ import (
 
 func main() {
 	request := gorequest.New()
-	//code=0d3uuvFa1db6dG0nT1Ga1z1ERv0uuvFE&userName=17773144837&pwd=bfa2591265651fc0b0e85afe29524244&fromChannel=wechat&token=&mpversion=202105171620
 	data := map[string]string{
 		"code":        Code,
 		"userName":    UserName,
@@ -19,14 +18,7 @@ func main() {
 		"token":       "",
 		"mpversion":   "202105171620",
 	}
-	//data := map[string]string{
-	//	"code":        "0d3uuvFa1db6dG0nT1Ga1z1ERv0uuvFE",
-	//	"userName":    "17773144837",
-	//	"pwd":         "bfa2591265651fc0b0e85afe29524244",
-	//	"fromChannel": "wechat",
-	//	"token":       "",
-	//	"mpversion":   "202105171620",
-	//}
+
 	preURL := "https://wenda.zuoyebang.com/"
 	_, body, errs := request.Post(preURL + "/commitui/session/login").Type("form").
 		Send(data).
